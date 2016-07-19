@@ -3,6 +3,14 @@
 }
 
 .trigger {
-  color: transparent;
+  /*display: none;*/
+  /*color: transparent;*/
   background: purple;
+  color: white;
+  text-align: center;
 }
+/*
+.trigger:after {
+  content: 'warning';
+  color: white;
+}*/

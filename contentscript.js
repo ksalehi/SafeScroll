@@ -1,5 +1,7 @@
 // $('body').addClass('grayed-out');
 
+const contentStore = {}
+
 function walk(rootNode)
 {
     // Find all the text nodes in rootNode
@@ -23,9 +25,14 @@ function handleText(elementNode) {
   // console.log(elementNode.nodeValue);
   // }
   //replaceText(elementNode.nodeValue);
-  if (elementNode.textContent.match(/text/g)) {
+  if (elementNode.textContent.match(/Trump/g)) {
     let node = elementNode.parentNode;
-    node.className += " trigger"
+    contentStore[elementNode] = elementNode.textContent;
+    console.log(elementNode.parentNode)
+    // console.log(node.parentNode)
+    let fourLevelsUp = node.parentNode.parentNode.parentNode
+    elementNode.textContent = "warning";
+    fourLevelsUp.className += " trigger";
   }
 }
 
