@@ -49,7 +49,8 @@ function generateWarning() {
   let warning = $('<div></div>').addClass("warning")
   $('<button/>', {
     text: 'Warning',
-    click: function() {
+    click: function(e) {
+      e.stopPropagation();
       $(this.parentNode).css("display", "none");
     }
   }).appendTo(warning);
