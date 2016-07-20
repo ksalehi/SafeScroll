@@ -20,36 +20,36 @@ function walk(rootNode)
     }
 }
 
-function handleText(elementNode) {
-  // console.log(elementNode.textContent)
-  // if (elementNode.nodeValue) {
-  // console.log(elementNode.nodeValue);
-  // }
-  //replaceText(elementNode.nodeValue);
-  if (elementNode.textContent.match(/Trump/g)) {
+function handleText(textNode) {
+  if (textNode.textContent.match(/Trump/g) &&
+        !$(textNode.parentNode).is('script')) {
     // debugger;
-    // let node = elementNode.parentNode;
-    // let parentNode = elementNode.parentNode;
-    let parentNode = findParentContainer(elementNode);
+    // let node = textNode.parentNode;
+    // let parentNode = textNode.parentNode;
+    let parentNode = findParentContainer(textNode);
     $(parentNode).addClass('pos-rel');
     // insert div with high z-index in front of parent node
     let warning = generateWarning();
-    $(parentNode).append(warning);
+    if (!$(parentNode).children('.warning')[0]) {
+      $(parentNode).append(warning);
+    }
     // $(parentNode.parentNode).append('<div class="warning">warning</div>');
     // setId(parentNode);
-    // contentStore[parentNode.id] = elementNode.textContent;
+    // contentStore[parentNode.id] = textNode.textContent;
     // console.log(contentStore);
-    // console.log(elementNode);
-    // console.log(elementNode.parentNode);
-    // elementNode.textContent = "warning";
+    // console.log(textNode);
+    // console.log(textNode.parentNode);
+    // textNode.textContent = "warning";
     // parentNode.className += " trigger";
   }
 }
 
 function findParentContainer(elementNode) {
+  const texts = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span", "a"]
   let node = elementNode.parentNode;
   while (node) {
-    if ($(node).css('display') === 'block') {
+    if (($(node).css('display') === 'block') && (
+        !texts.includes(node.localName))) {
       return node;
     } else {
       node = node.parentNode;
