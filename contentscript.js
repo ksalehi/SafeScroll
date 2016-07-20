@@ -1,6 +1,7 @@
 // $('body').addClass('grayed-out');
 
-const contentStore = {}
+const contentStore = {};
+let uniqueId = 0;
 
 function walk(rootNode)
 {
@@ -26,13 +27,26 @@ function handleText(elementNode) {
   // }
   //replaceText(elementNode.nodeValue);
   if (elementNode.textContent.match(/Trump/g)) {
-    let node = elementNode.parentNode;
-    contentStore[elementNode] = elementNode.textContent;
-    console.log(elementNode.parentNode)
-    // console.log(node.parentNode)
-    let fourLevelsUp = node.parentNode.parentNode.parentNode
-    elementNode.textContent = "warning";
-    fourLevelsUp.className += " trigger";
+    // debugger;
+    // let node = elementNode.parentNode;
+    let parentNode = elementNode.parentNode;
+    $(parentNode.parentNode).addClass('pos-rel');
+    // insert div with high z-index in front of parent node
+    $(parentNode.parentNode).append('<div class="warning">warning</div>');
+    // setId(parentNode);
+    // contentStore[parentNode.id] = elementNode.textContent;
+    // console.log(contentStore);
+    // console.log(elementNode);
+    // console.log(elementNode.parentNode);
+    // elementNode.textContent = "warning";
+    // parentNode.className += " trigger";
+  }
+}
+
+function setId(node) {
+  if (!node.id) {
+    node.id = uniqueId;
+    uniqueId++;
   }
 }
 

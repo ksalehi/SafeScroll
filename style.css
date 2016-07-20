@@ -9,6 +9,19 @@
   color: white;
   text-align: center;
 }
+
+.warning {
+  z-index: 1000;
+  background: pink;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.pos-rel {
+  position: relative;
+}
 /*
 .trigger:after {
   content: 'warning';
