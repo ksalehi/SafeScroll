@@ -32,7 +32,9 @@ function handleText(elementNode) {
     let parentNode = elementNode.parentNode;
     $(parentNode.parentNode).addClass('pos-rel');
     // insert div with high z-index in front of parent node
-    $(parentNode.parentNode).append('<div class="warning">warning</div>');
+    let warning = generateWarning();
+    $(parentNode.parentNode).append(warning);
+    // $(parentNode.parentNode).append('<div class="warning">warning</div>');
     // setId(parentNode);
     // contentStore[parentNode.id] = elementNode.textContent;
     // console.log(contentStore);
@@ -41,6 +43,18 @@ function handleText(elementNode) {
     // elementNode.textContent = "warning";
     // parentNode.className += " trigger";
   }
+}
+
+function generateWarning() {
+  let warning = $('<div></div>').addClass("warning")
+  $('<button/>', {
+    text: 'Warning',
+    click: function() {
+      $(this.parentNode).css("display", "none");
+    }
+  }).appendTo(warning);
+  return warning;
+  // return ("<div class='warning'><button>Warning</button></div>")
 }
 
 function setId(node) {
