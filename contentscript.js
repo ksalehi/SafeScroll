@@ -29,11 +29,12 @@ function handleText(elementNode) {
   if (elementNode.textContent.match(/Trump/g)) {
     // debugger;
     // let node = elementNode.parentNode;
-    let parentNode = elementNode.parentNode;
-    $(parentNode.parentNode).addClass('pos-rel');
+    // let parentNode = elementNode.parentNode;
+    let parentNode = findParentContainer(elementNode);
+    $(parentNode).addClass('pos-rel');
     // insert div with high z-index in front of parent node
     let warning = generateWarning();
-    $(parentNode.parentNode).append(warning);
+    $(parentNode).append(warning);
     // $(parentNode.parentNode).append('<div class="warning">warning</div>');
     // setId(parentNode);
     // contentStore[parentNode.id] = elementNode.textContent;
@@ -45,11 +46,23 @@ function handleText(elementNode) {
   }
 }
 
+function findParentContainer(elementNode) {
+  let node = elementNode.parentNode;
+  while (node) {
+    if ($(node).css('display') === 'block') {
+      return node;
+    } else {
+      node = node.parentNode;
+    }
+  }
+}
+
 function generateWarning() {
-  let warning = $('<div></div>').addClass("warning")
+  let warning = $('<div></div>').addClass("warning");
   $('<button/>', {
     text: 'Warning',
     click: function(e) {
+      e.preventDefault();
       e.stopPropagation();
       $(this.parentNode).css("display", "none");
     }
