@@ -30,10 +30,10 @@ function handleText(elementNode) {
     // debugger;
     // let node = elementNode.parentNode;
     let parentNode = elementNode.parentNode;
-    $(parentNode.parentNode).addClass('pos-rel');
+    $(parentNode).addClass('pos-rel');
     // insert div with high z-index in front of parent node
     let warning = generateWarning();
-    $(parentNode.parentNode).append(warning);
+    $(parentNode).append(warning);
     // $(parentNode.parentNode).append('<div class="warning">warning</div>');
     // setId(parentNode);
     // contentStore[parentNode.id] = elementNode.textContent;
@@ -49,8 +49,9 @@ function generateWarning() {
   let warning = $('<div></div>').addClass("warning")
   $('<button/>', {
     text: 'Warning',
-    click: function() {
+    click: function(e) {
       $(this.parentNode).css("display", "none");
+      e.stopPropagation();
     }
   }).appendTo(warning);
   return warning;
