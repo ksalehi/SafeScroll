@@ -1,4 +1,14 @@
-// $('body').addClass('grayed-out');
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    alert("hi");
+    if (request.greeting == "hello") {
+      sendResponse({farewell: "goodbye"});
+    }
+  });
+
+//chrome.runtime.onMessage.addListener(function callback)
+// callback should be a function like this:
+//function(any message, MessageSender sender, function sendResponse) {...};
 
 const contentStore = {};
 let uniqueId = 0;
