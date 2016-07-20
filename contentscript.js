@@ -50,8 +50,9 @@ function generateWarning() {
   $('<button/>', {
     text: 'Warning',
     click: function(e) {
-      $(this.parentNode).css("display", "none");
+      e.preventDefault();
       e.stopPropagation();
+      $(this.parentNode).css("display", "none");
     }
   }).appendTo(warning);
   return warning;
