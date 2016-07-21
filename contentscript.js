@@ -1,8 +1,6 @@
-// $('body').addClass('grayed-out');
-
 const contentStore = {};
 let uniqueId = 0;
-let block = "Trump"
+let block = "Trump";
 
 chrome.storage.sync.get(
   'blockContent', function(items) {
@@ -38,7 +36,6 @@ function walk(rootNode)
 }
 
 function handleText(textNode) {
-  console.log(block)
   if (textNode.textContent.match(block) &&
         !$(textNode.parentNode).is('script')) {
     // debugger;
@@ -48,7 +45,7 @@ function handleText(textNode) {
     $(parentNode).addClass('pos-rel');
     // insert div with high z-index in front of parent node
     let warning = generateWarning();
-    if (!$(parentNode).children('.warning')[0]) {
+    if (!$(parentNode).children('.extension-warning')[0]) {
       $(parentNode).append(warning);
     }
     // $(parentNode.parentNode).append('<div class="warning">warning</div>');
@@ -76,7 +73,11 @@ function findParentContainer(elementNode) {
 }
 
 function generateWarning() {
-  let warning = $('<div></div>').addClass("warning");
+  let warning = $('<div></div>').addClass("extension-warning");
+  let lock = $('<div class="locked"></div>');
+  warning.append(lock);
+  const imgURL = chrome.extension.getURL("css/images/locked.png");
+  $('.locked').css('background-image', `url('${imgURL}')`);
   $('<button/>', {
     text: 'Warning',
     click: function(e) {
@@ -86,7 +87,6 @@ function generateWarning() {
     }
   }).appendTo(warning);
   return warning;
-  // return ("<div class='warning'><button>Warning</button></div>")
 }
 
 function setId(node) {

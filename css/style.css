@@ -1,0 +1,48 @@
+.grayed-out {
+  background: gray;
+}
+
+.trigger {
+  /*display: none;*/
+  /*color: transparent;*/
+  background: purple;
+  color: white;
+  text-align: center;
+}
+
+.extension-warning {
+  z-index: 30;
+  background: lightgray;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.pos-rel {
+  position: relative;
+}
+
+.locked {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 10px;
+  width: 10px;
+  background-size: 100%;
+}
+
+.options {
+  border-radius: 10px;
+  background: darkgray;
+}
+
+button {
+  outline:0;
+}
+
+.options:hover {
+  background: gray;
+  cursor: pointer;
+}
