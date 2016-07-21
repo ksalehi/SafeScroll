@@ -2,6 +2,23 @@
 
 const contentStore = {};
 let uniqueId = 0;
+let block = "Trump"
+
+chrome.storage.sync.get(
+  'blockContent', function(items) {
+  block = items.blockContent;
+  walkAndObserve(document);
+});
+// document.addEventListener('DOMContentLoaded', function() {
+//   debugger
+//   chrome.storage.sync.get({
+//     favoriteColor: 'red',
+//     likesColor: true
+//   }, function(items) {
+//     console.log(items)
+//   })
+// });
+
 
 function walk(rootNode)
 {
@@ -21,7 +38,8 @@ function walk(rootNode)
 }
 
 function handleText(textNode) {
-  if (textNode.textContent.match(/Trump/g) &&
+  console.log(block)
+  if (textNode.textContent.match(block) &&
         !$(textNode.parentNode).is('script')) {
     // debugger;
     // let node = textNode.parentNode;
@@ -124,4 +142,5 @@ function walkAndObserve(doc) {
         titleObserver.observe(docTitle, observerConfig);
     }
 }
-walkAndObserve(document);
+
+// walkAndObserve(document);
