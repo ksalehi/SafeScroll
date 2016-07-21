@@ -74,19 +74,29 @@ function findParentContainer(elementNode) {
 
 function generateWarning() {
   let warning = $('<div></div>').addClass("extension-warning");
-  let lock = $('<div class="locked"></div>');
+  let lock = $('<div class="lock locked"></div>');
   warning.append(lock);
-  const imgURL = chrome.extension.getURL("css/images/locked.png");
-  $('.locked').css('background-image', `url('${imgURL}')`);
-  $('<button/>', {
-    text: 'Warning',
-    click: function(e) {
+  $('.lock').on('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      $(this.parentNode).css("display", "none");
+      toggleLock(this);
     }
-  }).appendTo(warning);
+  );
   return warning;
+}
+
+function toggleLock(element) {
+  debugger;
+  let classes = $(element).attr('class').split(' ');
+  if (classes.includes('locked')) {
+    $(element).removeClass('locked');
+    $(element).addClass('unlocked');
+    $(element.parentNode).css("background", "transparent");
+  } else if (classes.includes('unlocked')) {
+    $(element).removeClass('unlocked');
+    $(element).addClass('locked');
+    $(element.parentNode).css("background", "darkgray");
+  }
 }
 
 function setId(node) {
