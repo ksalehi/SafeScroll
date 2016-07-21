@@ -2,7 +2,7 @@
 
 const contentStore = {};
 let uniqueId = 0;
-let block = "Trump"
+let block = "Republican"
 
 chrome.storage.sync.get(
   'blockContent', function(items) {
