@@ -1,24 +1,11 @@
-// $('body').addClass('grayed-out');
-
 const contentStore = {};
-let uniqueId = 0;
-let block = "Republican"
+let block = "Trump";
 
 chrome.storage.sync.get(
   'blockContent', function(items) {
   block = items.blockContent;
   walkAndObserve(document);
 });
-// document.addEventListener('DOMContentLoaded', function() {
-//   debugger
-//   chrome.storage.sync.get({
-//     favoriteColor: 'red',
-//     likesColor: true
-//   }, function(items) {
-//     console.log(items)
-//   })
-// });
-
 
 function walk(rootNode)
 {
@@ -38,27 +25,16 @@ function walk(rootNode)
 }
 
 function handleText(textNode) {
-  console.log(block)
   if (textNode.textContent.match(block) &&
         !$(textNode.parentNode).is('script')) {
-    // debugger;
-    // let node = textNode.parentNode;
-    // let parentNode = textNode.parentNode;
+
     let parentNode = findParentContainer(textNode);
     $(parentNode).addClass('pos-rel');
     // insert div with high z-index in front of parent node
     let warning = generateWarning();
-    if (!$(parentNode).children('.warning')[0]) {
+    if (!$(parentNode).children('.extension-warning')[0]) {
       $(parentNode).append(warning);
     }
-    // $(parentNode.parentNode).append('<div class="warning">warning</div>');
-    // setId(parentNode);
-    // contentStore[parentNode.id] = textNode.textContent;
-    // console.log(contentStore);
-    // console.log(textNode);
-    // console.log(textNode.parentNode);
-    // textNode.textContent = "warning";
-    // parentNode.className += " trigger";
   }
 }
 
@@ -76,30 +52,34 @@ function findParentContainer(elementNode) {
 }
 
 function generateWarning() {
-  let warning = $('<div></div>').addClass("warning");
-  $('<button/>', {
-    text: 'Warning',
-    click: function(e) {
+  // debugger
+  let warning = $('<div></div>').addClass("extension-warning");
+  let lock = $('<div class="lock locked"></div>');
+  warning.append(lock);
+  $('.lock').off().on('click', function(e) {
+      debugger
       e.preventDefault();
       e.stopPropagation();
-      $(this.parentNode).css("display", "none");
+      toggleLock(this);
     }
-  }).appendTo(warning);
+  );
   return warning;
-  // return ("<div class='warning'><button>Warning</button></div>")
 }
 
-function setId(node) {
-  if (!node.id) {
-    node.id = uniqueId;
-    uniqueId++;
+function toggleLock(element) {
+  debugger;
+  let classes = $(element).attr('class').split(' ');
+  if (classes.includes('locked')) {
+    $(element).removeClass('locked');
+    $(element).addClass('unlocked');
+    $(element.parentNode).css("background", "transparent");
+  } else if (classes.includes('unlocked')) {
+    $(element).removeClass('unlocked');
+    $(element).addClass('locked');
+    $(element.parentNode).css("background", "lightgray");
   }
 }
 
-function replaceText(text) {
-  text = text.replace(/text/g, "yolo swag");
-  return text;
-}
 
 // The callback used for the document body and title observers
 function observerCallback(mutations) {
