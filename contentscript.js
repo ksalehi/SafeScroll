@@ -57,7 +57,6 @@ function generateWarning() {
   let lock = $('<div class="lock locked"></div>');
   warning.append(lock);
   $('.lock').off().on('click', function(e) {
-      debugger
       e.preventDefault();
       e.stopPropagation();
       toggleLock(this);
@@ -67,7 +66,6 @@ function generateWarning() {
 }
 
 function toggleLock(element) {
-  debugger;
   let classes = $(element).attr('class').split(' ');
   if (classes.includes('locked')) {
     $(element).removeClass('locked');
