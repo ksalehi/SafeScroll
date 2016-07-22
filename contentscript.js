@@ -25,16 +25,18 @@ function walk(rootNode)
 }
 
 function handleText(textNode) {
-  if (textNode.textContent.match(block) &&
-        !$(textNode.parentNode).is('script')) {
+  block.forEach(string => {
+    if (textNode.textContent.match(string) &&
+          !$(textNode.parentNode).is('script')) {
 
-    let parentNode = findParentContainer(textNode);
-    if (!$(parentNode).find('.extension-warning')[0]) {
-      let warning = generateWarning(parentNode);
-      $(parentNode).addClass('pos-rel');
-      $(parentNode).append(warning);
+      let parentNode = findParentContainer(textNode);
+      if (!$(parentNode).find('.extension-warning')[0]) {
+        let warning = generateWarning(parentNode);
+        $(parentNode).addClass('pos-rel');
+        $(parentNode).append(warning);
+      }
     }
-  }
+  });
 }
 
 function findParentContainer(elementNode) {

@@ -1,6 +1,6 @@
 // Saves options to chrome.storage
 function saveOptions() {
-  let content = $('#content input:checked');
+  let content = $('#content input:checked').toArray().map(input => input.value);
   chrome.storage.sync.set({
     blockContent: content,
   }, function() {
@@ -16,16 +16,14 @@ function saveOptions() {
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restoreOptions() {
-  debugger;
   // Use default value color = 'red' and likesColor = true.
   chrome.storage.sync.get({
     blockContent: 'Trump',
   }, function(items) {
     // restore which boxes are checked:
-    $('#content input').each(input => {
-      debugger;
+    $('#content input').toArray().forEach(input => {
       // document.getElementById("checkbox").checked = true;
-      if (items.blockContent.includes(input)) {
+      if (items.blockContent && items.blockContent.includes(input.value)) {
         input.checked = true;
       }
     });
