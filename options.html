@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head><title>My Test Extension Options</title></head>
-<body>
+<head>
+  <title>SafeScroll Settings</title>
+  <script src="options.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
 
-Content to Block:
-<select id="content">
- <option value="Trump">Trump</option>
- <option value="sexual assault">Sexual Assault</option>
- <option value="gun violence">Gun Violence</option>
- <option value="javascript">JavaScript</option>
- <option value="Pokemon">Pokemon</option>
- <option value="Republican">Republican</option>
- <option value="Hearthstone">Hearthstone</option>
-</select>
+  <body>
+    <h1>Settings</h1>
 
-<div id="status"></div>
-<button id="save">Save</button>
+    <h2>Content to Block:</h2>
 
-<script src="options.js"></script>
-</body>
+    <form id="content">
+      <label><input type="checkbox" value="sexual assault">Sexual assault</label>
+      <label><input type="checkbox" value="Trump">Donald Trump</label>
+      <label><input type="checkbox" value="gun violence">Gun Violence</label>
+      <label><input type="checkbox" value="Pokemon">Pokemon</label>
+      <label><input type="checkbox" value="Republican">Republican</label>
+      <label><input type="checkbox" value="Hearthstone">Hearthstone</label>
+      <label><input type="checkbox" value="Game of Thrones">Game of Thrones</label>
+
+    </form>
+
+    <div id="status"></div>
+    <button id="save-button">Save</button>
+
+  </body>
 </html>

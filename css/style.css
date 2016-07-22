@@ -22,8 +22,7 @@
   width: 15px;
   background-size: 205%;
   background-repeat: no-repeat;
-  margin-top: 5px;
-  margin-right: 5px;
+  margin: 5px;
   z-index: 100;
 }
 
@@ -47,16 +46,40 @@
   cursor: pointer;
 }
 
-.options {
-  border-radius: 10px;
-  background: darkgray;
+.settings {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.settings:hover, #save-button:hover {
+  background: gray;
+  cursor: pointer;
+}
+
+#save-button {
+  margin: 15px;
 }
 
 button {
-  outline:0;
+  outline: 0;
+  border: 0;
+  border-radius: 5px;
+  background: lightgray;
+  font-size: 16px;
+  padding: 5px 15px;
+  text-align: center;
 }
 
-.options:hover {
-  background: gray;
-  cursor: pointer;
+
+label {
+  padding: 10px;
+  font-size: 16px;
+  display: block;
+}
+
+input[type="checkbox"] {
+  padding: 5px;
+  margin: 5px;
 }

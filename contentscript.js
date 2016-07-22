@@ -29,10 +29,9 @@ function handleText(textNode) {
         !$(textNode.parentNode).is('script')) {
 
     let parentNode = findParentContainer(textNode);
-    $(parentNode).addClass('pos-rel');
-    // insert div with high z-index in front of parent node
-    if (!$(parentNode).children('.extension-warning')[0]) {
+    if (!$(parentNode).find('.extension-warning')[0]) {
       let warning = generateWarning(parentNode);
+      $(parentNode).addClass('pos-rel');
       $(parentNode).append(warning);
     }
   }
