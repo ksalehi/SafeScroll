@@ -31,7 +31,7 @@ function handleText(textNode) {
     let parentNode = findParentContainer(textNode);
     $(parentNode).addClass('pos-rel');
     // insert div with high z-index in front of parent node
-    let warning = generateWarning();
+    let warning = generateWarning(parentNode);
     if (!$(parentNode).children('.extension-warning')[0]) {
       $(parentNode).append(warning);
     }
@@ -51,17 +51,16 @@ function findParentContainer(elementNode) {
   }
 }
 
-function generateWarning() {
-  // debugger
+function generateWarning(parentNode) {
   let warning = $('<div></div>').addClass("extension-warning");
   let lock = $('<div class="lock locked"></div>');
-  warning.append(lock);
+
+  $(parentNode).append(lock);
   $('.lock').off().on('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleLock(this);
-    }
-  );
+    e.preventDefault();
+    e.stopPropagation();
+    toggleLock(this);
+  });
   return warning;
 }
 
@@ -70,11 +69,11 @@ function toggleLock(element) {
   if (classes.includes('locked')) {
     $(element).removeClass('locked');
     $(element).addClass('unlocked');
-    $(element.parentNode).css("background", "transparent");
+    $(element.parentNode).children('.extension-warning').css("display", "none");
   } else if (classes.includes('unlocked')) {
     $(element).removeClass('unlocked');
     $(element).addClass('locked');
-    $(element.parentNode).css("background", "lightgray");
+    $(element.parentNode).children('.extension-warning').css("display", "block");
   }
 }
 
