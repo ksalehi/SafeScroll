@@ -31,15 +31,15 @@ function handleText(textNode) {
     let parentNode = findParentContainer(textNode);
     $(parentNode).addClass('pos-rel');
     // insert div with high z-index in front of parent node
-    let warning = generateWarning(parentNode);
     if (!$(parentNode).children('.extension-warning')[0]) {
+      let warning = generateWarning(parentNode);
       $(parentNode).append(warning);
     }
   }
 }
 
 function findParentContainer(elementNode) {
-  const texts = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span", "a"]
+  const texts = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span", "a"];
   let node = elementNode.parentNode;
   while (node) {
     if (($(node).css('display') === 'block') && (
@@ -107,7 +107,6 @@ function walkAndObserve(doc) {
 
     // Do the initial text replacements in the document body and title
     walk(doc.body);
-    doc.title = replaceText(doc.title);
 
     // Observe the body so that we replace text in any added/modified nodes
     bodyObserver = new MutationObserver(observerCallback);
