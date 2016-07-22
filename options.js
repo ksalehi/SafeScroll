@@ -18,7 +18,7 @@ function saveOptions() {
 function restoreOptions() {
   // Use default value color = 'red' and likesColor = true.
   chrome.storage.sync.get({
-    blockContent: 'Trump',
+    blockContent: ['Trump'],
   }, function(items) {
     // restore which boxes are checked:
     $('#content input').toArray().forEach(input => {
@@ -34,6 +34,34 @@ function restoreOptions() {
 
 $(document).ready(() => {
   restoreOptions();
-  document.getElementById('save-button').addEventListener('click',
-      saveOptions);
+  let saveButton = document.getElementById('save-button')
+  if (saveButton) {
+    saveButton.addEventListener('click',
+        saveOptions);
+  }
+
+  const sexualAssault = $('.category.sexual-assault')[0];
+  const trump = $('.category.trump')[0];
+
+  $(sexualAssault).change(() => {
+    let categoryParent = $('.category.sexual-assault')[0].parentNode
+    $(categoryParent).children('.content-item').toArray().forEach((input) => {
+      if (sexualAssault.checked) {
+        input.checked = true;
+      } else {
+        input.checked = false;
+      }
+    })
+  });
+
+  $(trump).change(() => {
+    let categoryParent = $('.category.trump')[0].parentNode
+    $(categoryParent).children('.content-item').toArray().forEach((input) => {
+      if (trump.checked) {
+        input.checked = true;
+      } else {
+        input.checked = false;
+      }
+    })
+  });
 });

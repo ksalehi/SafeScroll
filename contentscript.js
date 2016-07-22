@@ -1,9 +1,10 @@
 const contentStore = {};
-let block = "Trump";
+let block = ["Trump"];
 
 chrome.storage.sync.get(
   'blockContent', function(items) {
   block = items.blockContent;
+  console.log(block);
   walkAndObserve(document);
 });
 
@@ -25,8 +26,9 @@ function walk(rootNode)
 }
 
 function handleText(textNode) {
-  block.forEach(string => {
-    if (textNode.textContent.match(string) &&
+  block.forEach((string) => {
+    let toMatch = new RegExp(string, "i");
+    if (textNode.textContent.match(toMatch) &&
           !$(textNode.parentNode).is('script')) {
 
       let parentNode = findParentContainer(textNode);
