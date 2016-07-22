@@ -62,6 +62,10 @@
   margin: 15px;
 }
 
+.content-item {
+  display: none;
+}
+
 button {
   outline: 0;
   border: 0;
