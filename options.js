@@ -1,6 +1,6 @@
 // Saves options to chrome.storage
 function saveOptions() {
-  let content = $('#content input:checked').toArray().map(input => input.value);
+  let content = $('#content input').toArray().map(input => input.value);
   chrome.storage.sync.set({
     blockContent: content,
   }, function() {
