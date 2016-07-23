@@ -32,14 +32,26 @@ function restoreOptions() {
   });
 }
 
+function createCategory(string) {
+  let newCategory = $(`<label class="outer-label"><input class="category" type="checkbox" value='${string}'>${string}</label>`);
+  $('#custom-category-form').prepend(newCategory);
+  $('.custom-category').val(''); // clear input field
+}
+
 $(document).ready(() => {
   restoreOptions();
-  let saveButton = document.getElementById('save-button')
+  let saveButton = document.getElementById('save-button');
   if (saveButton) {
     saveButton.addEventListener('click',
         saveOptions);
   }
-
+  let customCategorySubmit = document.getElementById('custom-category-form');
+  if (customCategorySubmit) {
+    customCategorySubmit.addEventListener('submit', e => {
+      e.preventDefault();
+      createCategory($('.custom-category').val()); // pass in text field value
+    });
+  }
   const sexualAssault = $('.category.sexual-assault')[0];
   const trump = $('.category.trump')[0];
 

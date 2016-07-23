@@ -73,8 +73,24 @@
   margin: 15px;
 }
 
+#content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 75%;
+  margin: 0 auto;
+}
+.category {
+  font-size: 18px;
+}
+
 .content-item {
-  display: none;
+  /*display: none;*/
+  font-size: 16px;
+}
+
+.outer-label {
+  padding: 15px;
 }
 
 button {
@@ -89,12 +105,30 @@ button {
 
 
 label {
-  padding: 10px;
+  margin: 20px;
+  padding: 5px;
   font-size: 16px;
   display: block;
+  background: lightblue;
 }
 
 input[type="checkbox"] {
   padding: 5px;
   margin: 5px;
+}
+
+h1, h2 {
+  display: flex;
+  margin: 10px auto;
+  width: 75%;
+}
+
+input[type="text"] {
+  border-radius: 5px;
+  width: 200px;
+  font-size: 16px;
+}
+
+.hidden-submit {
+  display: none;
 }
