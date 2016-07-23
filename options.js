@@ -33,6 +33,7 @@ function restoreOptions() {
       let label = $(`<label>${customCategory}</label>`).addClass('outer-label');
       let category = $(`<input class="category" type="checkbox" value='${customCategory}'>`);
       label.prepend(category);
+      label.prepend($('<div class="dropdown-icon"></div>'));
       category[0].checked = true;
       $('#content').append(label);
     });
@@ -43,6 +44,7 @@ function createCategory(string) {
   let label = $(`<label>${string}</label>`).addClass('outer-label');
   let category = $(`<input class="category" type="checkbox" value='${string}'>`);
   label.prepend(category);
+  label.prepend($('<div class="dropdown-icon"></div>'));
   category[0].checked = true;
   $('#content').append(label);
   $('.custom-category').val(''); // clear input field

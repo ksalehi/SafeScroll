@@ -32,7 +32,7 @@ function handleText(textNode) {
           !$(textNode.parentNode).is('script')) {
 
       let parentNode = findParentContainer(textNode);
-      if (!$(parentNode).find('.extension-warning')[0]) {
+      if (!$(parentNode).find('.extension-warning')[0] && parentNode.localName !== 'body') {
         let warning = generateWarning(parentNode);
         $(parentNode).addClass('pos-rel');
         $(parentNode).append(warning);
