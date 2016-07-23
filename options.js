@@ -20,21 +20,32 @@ function restoreOptions() {
   chrome.storage.sync.get({
     blockContent: ['Trump'],
   }, function(items) {
+    debugger;
     // restore which boxes are checked:
     $('#content input').toArray().forEach(input => {
       // document.getElementById("checkbox").checked = true;
-      if (items.blockContent && items.blockContent.includes(input.value)) {
+      if (items.blockContent.includes(input.value)) {
         input.checked = true;
+        items.blockContent.splice(items.blockContent.indexOf(input.value), 1); // so only custom labels are left
       }
     });
-
-    // document.getElementById('content').value = items.blockContent;
+    items.blockContent.forEach(customCategory => {
+      // regenerate custom categories
+      let label = $(`<label>${customCategory}</label>`).addClass('outer-label');
+      let category = $(`<input class="category" type="checkbox" value='${customCategory}'>`);
+      label.prepend(category);
+      category[0].checked = true;
+      $('#custom-category-form').prepend(label);
+    });
   });
 }
 
 function createCategory(string) {
-  let newCategory = $(`<label class="outer-label"><input class="category" type="checkbox" value='${string}'>${string}</label>`);
-  $('#custom-category-form').prepend(newCategory);
+  let label = $(`<label>${string}</label>`).addClass('outer-label');
+  let category = $(`<input class="category" type="checkbox" value='${string}'>`);
+  label.prepend(category);
+  category[0].checked = true;
+  $('#custom-category-form').prepend(label);
   $('.custom-category').val(''); // clear input field
 }
 
