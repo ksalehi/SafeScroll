@@ -20,7 +20,6 @@ function restoreOptions() {
   chrome.storage.sync.get({
     blockContent: ['Trump'],
   }, function(items) {
-    debugger;
     // restore which boxes are checked:
     $('#content input').toArray().forEach(input => {
       // document.getElementById("checkbox").checked = true;
@@ -35,7 +34,7 @@ function restoreOptions() {
       let category = $(`<input class="category" type="checkbox" value='${customCategory}'>`);
       label.prepend(category);
       category[0].checked = true;
-      $('#custom-category-form').prepend(label);
+      $('#content').append(label);
     });
   });
 }
@@ -45,7 +44,7 @@ function createCategory(string) {
   let category = $(`<input class="category" type="checkbox" value='${string}'>`);
   label.prepend(category);
   category[0].checked = true;
-  $('#custom-category-form').prepend(label);
+  $('#content').append(label);
   $('.custom-category').val(''); // clear input field
 }
 

@@ -8,39 +8,40 @@
 </head>
 
   <body>
-    <h1>Settings</h1>
+    <div class="main">
+      <h1>Settings</h1>
 
-    <h2>Content to Block:</h2>
+      <h2>Content to Block:</h2>
 
-    <div id="content">
-      <label class="outer-label"><input class="category sexual-assault" type="checkbox" value="sexual assault">Sexual assault
-        <label class="content-item">
-          <input class="content-item" type="checkbox" value="Sexual Assault">Sexual Assault</label>
-        <label class="content-item">
-          <input class="content-item" type="checkbox" value="rape">Rape</label>
-      </label>
+      <div id="content">
+        <label class="outer-label"><input class="category sexual-assault" type="checkbox" value="sexual assault">Sexual assault
+          <label class="content-item">
+            <input class="content-item" type="checkbox" value="Sexual Assault">Sexual Assault</label>
+          <label class="content-item">
+            <input class="content-item" type="checkbox" value="rape">Rape</label>
+        </label>
 
-      <label class="outer-label"><input class="category trump" type="checkbox" value="Trump">Donald Trump
-        <label class="content-item">
-          <input class="content-item" type="checkbox" value="Trump">Donald Trump</label>
-        <label class="content-item">
-          <input class="content-item" type="checkbox" value="The Donald">The Donald</label>
-        <label class="content-item">
-          <input class="content-item" type="checkbox" value="Melania">Melania</label>
-      </label>
+        <label class="outer-label"><input class="category trump" type="checkbox" value="Trump">Donald Trump
+          <label class="content-item">
+            <input class="content-item" type="checkbox" value="Trump">Donald Trump</label>
+          <label class="content-item">
+            <input class="content-item" type="checkbox" value="The Donald">The Donald</label>
+          <label class="content-item">
+            <input class="content-item" type="checkbox" value="Melania">Melania</label>
+        </label>
 
-      <label class="outer-label"><input class="category" type="checkbox" value="gun violence">Gun Violence</label>
-      <label class="outer-label"><input class="category" type="checkbox" value="Pokemon">Pokemon</label>
-      <label class="outer-label"><input class="category" type="checkbox" value="Republican">Republican</label>
-      <label class="outer-label"><input class="category" type="checkbox" value="Game of Thrones">Game of Thrones</label>
+        <label class="outer-label"><input class="category" type="checkbox" value="gun violence">Gun Violence</label>
+        <label class="outer-label"><input class="category" type="checkbox" value="Pokemon">Pokemon</label>
+        <label class="outer-label"><input class="category" type="checkbox" value="Republican">Republican</label>
+        <label class="outer-label"><input class="category" type="checkbox" value="Game of Thrones">Game of Thrones</label>
+      </div>
       <form id="custom-category-form">
         <label class="outer-label">Custom category: <input type="text" placeholder="Enter text" class="custom-category" value=""></label>
         <input type="submit" class="hidden-submit"/>
       </form>
+
+      <div id="status"></div>
+      <button id="save-button">Save Changes</button>
     </div>
-
-    <div id="status"></div>
-    <button id="save-button">Save</button>
-
   </body>
 </html>
