@@ -41,37 +41,37 @@ function restoreOptions() {
 }
 
 function createCategory(string) {
-  let label = $(`<label>${string}</label>`).addClass('outer-label');
+  stringId = string.replace(" ", "-");
+  let label = $(`<label>${string}</label>`).addClass('outer-label').attr('id', `${stringId}`);
   // let category = $(`<input class="category" type="checkbox" value='${string}'>`);
   let category = $('<input/>', {
     "class": "category",
     type: "checkbox",
-    value: `${string}`,
-    id: `${string}-category`
+    value: `${stringId}`
   });
   label.prepend(category);
   label.prepend($('<div class="dropdown-icon"></div>'));
 
-  let contentItemLabel = $(`<label class="content-item">${string}</label>`)
-  let contentItem = $('<input/>', {
-    "class": "content-item",
-    type: "checkbox",
-    value: `${string}`,
-    id: `${string}-item`
-  });
+  // let contentItemLabel = $(`<label class="content-item">${string}</label>`)
+  // let contentItem = $('<input/>', {
+  //   "class": "content-item",
+  //   type: "checkbox",
+  //   value: `${string}`,
+  //   id: `${string}-item`
+  // });
 
-  label.append(contentItemLabel.prepend(contentItem))
+  // label.append(contentItemLabel.prepend(contentItem))
 
   let contentItemForm = $('<form/>', {
-    "class": `${string} item-form`,
-    id: `${string}-item-form`
+    "class": `${stringId} item-form`,
+    id: `${stringId}-form`
   });
 
-  let contentFormLabel = $(`<label class="item-form-label">Add Custom Filter</label>`);
+  let contentFormLabel = $(`<label class="outer-label">Custom filter</label>`);
 
   let contentItemInput = $('<input/>', {
-    "class": `${string} item-input`,
-    id: `${string}-item-input`,
+    "class": `custom-content ${stringId}`,
+    id: `${stringId}-input`,
     type: 'text',
     placeholder: "Enter text",
     vale: "",
@@ -79,14 +79,13 @@ function createCategory(string) {
 
   let contentItemSubmit = $('<input/>', {
     type: 'submit',
-    class: 'hidden-submit',
-    id: `${string}-submit`,
-    submit: function(e) {
-      e.preventDefault();
-      console.log(this.id)
-      debugger
-    }
+    class: 'hidden-submit'
   });
+
+  $(contentItemForm).submit((e) => {
+    e.preventDefault();
+    createItem(contentItemForm);
+  })
 
   contentFormLabel.append(contentItemInput);
   contentItemForm.append(contentFormLabel);
