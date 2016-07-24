@@ -1,6 +1,6 @@
 // Saves options to chrome.storage
 function saveOptions() {
-  let content = $('#options-content input').toArray().map(input => input.value);
+  let content = $('#options-content input:checked').toArray().map(input => input.value);
   chrome.storage.sync.set({
     blockContent: content,
   }, function() {
@@ -98,6 +98,22 @@ function createCategory(string) {
   $('.custom-category').val(''); // clear input field
 }
 
+function createItem(form) {
+  const formClass = $(form).attr('class').split(' ')[0]
+  const parent = $(`#${formClass}`);
+  const input = $(`#${formClass}-input`)
+
+  const label = $(`<label class="content-label ${input.val()}">${input.val()}</label>`);
+  const newItem = $('<input/>', {
+    "class": "content-item",
+    type: "checkbox",
+    value: `${input.val()}`,
+    checked: true
+  });
+
+  $(parent).append(label.prepend(newItem));
+}
+
 $(document).ready(() => {
   restoreOptions();
   let saveButton = document.getElementById('save-button');
@@ -105,6 +121,7 @@ $(document).ready(() => {
     saveButton.addEventListener('click',
         saveOptions);
   }
+
   let customCategorySubmit = document.getElementById('custom-category-form');
   if (customCategorySubmit) {
     customCategorySubmit.addEventListener('submit', e => {
@@ -113,6 +130,24 @@ $(document).ready(() => {
     });
   }
 
+  // let sexualtAssaultSubmit = document.getElementById('sexual-assault-form');
+  // if (sexualtAssaultSubmit) {
+  //   sexualtAssaultSubmit.addEventListener('submit', e => {
+  //     e.preventDefault();
+  //     createItem($('#sexual-assault-input').val());
+  //   })
+  // }
+
+  let itemForms = $('.item-form');
+  console.log(itemForms);
+  if (itemForms) {
+    itemForms.toArray().forEach((form) => {
+      $(form).submit((e) => {
+        e.preventDefault();
+        createItem(form);
+      });
+    });
+  }
 
   // const sexualAssault = $('.category.sexual-assault')[0];
   // const trump = $('.category.trump')[0];
