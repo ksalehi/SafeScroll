@@ -76,7 +76,7 @@
   text-align: center;
 }
 
-.main {
+.options-main {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -147,5 +147,5 @@ input[type="text"] {
 
 .dropdown-icon:hover {
   cursor: pointer;
-  
+
 }
