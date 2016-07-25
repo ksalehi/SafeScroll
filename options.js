@@ -42,17 +42,16 @@ function restoreOptions() {
       }
     });
 
-    let contentNames = items.blockContent.map(content => content.split(',')[0])
-    let contentChecks = items.blockContent.map(content => content.split(',')[2])
+    let contentNames = items.blockContent.map(content => content.split(',')[0]);
+    let contentChecks = items.blockContent.map(content => content.split(',')[2]);
     $('#options-content .content-item').toArray().forEach(input => {
       if (contentNames.includes(input.value)) {
-        let index = contentNames.indexOf(input.value)
+        let index = contentNames.indexOf(input.value);
         if (contentChecks[index] === "true") {
-          input.checked = true;
-        } else {
-          input.checked = false;
-        }
-
+           input.checked = true;
+         } else {
+           input.checked = false;
+         }
         items.blockContent.splice(index, 1); // so only custom labels are left
         contentNames.splice(index, 1);
         contentChecks.splice(index, 1);
@@ -68,15 +67,11 @@ function restoreOptions() {
       }
     });
     $('.down').on('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleDropdown(e);
+      addDropdownListener(e);
     });
 
     $('.up').on('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleDropdown(e);
+      addDropdownListener(e);
     });
 
     items.blockContent.forEach(content => {
@@ -88,6 +83,12 @@ function restoreOptions() {
       }
     });
   });
+}
+
+function addDropdownListener(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  toggleDropdown(e);
 }
 
 function toggleDropdown(e) {
@@ -109,11 +110,11 @@ function createCategory(string, check) {
   let newDiv = $('<div></div>').addClass('content-category collapsed');
   newDiv.append(label);
 
-  if (check === "true") {
-    check = true;
-  } else {
-    check = false;
-  }
+   if (check === "true") {
+     check = true;
+   } else {
+     check = false;
+   }
 
   let category = $('<input/>', {
     "class": "category",
@@ -122,7 +123,12 @@ function createCategory(string, check) {
     checked: check,
   });
   label.prepend(category);
-  label.prepend($('<div class="dropdown-icon down"></div>'));
+  let dropdown = $('<div class="dropdown-icon down"></div>');
+  label.prepend(dropdown);
+
+  dropdown.on('click', e => {
+    addDropdownListener(e);
+  });
 
   let contentItemForm = $('<form/>', {
     "class": `${stringId} item-form`,
@@ -136,7 +142,7 @@ function createCategory(string, check) {
     id: `${stringId}-input`,
     type: 'text',
     placeholder: "Enter text",
-    vale: "",
+    value: "",
   });
 
   let contentItemSubmit = $('<input/>', {
@@ -170,9 +176,9 @@ function createItem(category, check, value) {
   }
 
   if (check === "true") {
-    check = true;
+   check = true;
   } else {
-    check = false;
+   check = false;
   }
 
   const label = $(`<label class="content-label ${input}">${input}</label>`);
@@ -208,7 +214,7 @@ $(document).ready(() => {
     itemForms.toArray().forEach((form) => {
       $(form).submit((e) => {
         e.preventDefault();
-        createItem($(form).attr('class').split(' ')[0], "true");
+        createItem($(form).attr('class').split(' ')[0], 'true');
       });
     });
   }

@@ -97,6 +97,7 @@
   font-weight: normal;
   display: block;
   margin-left: 30px;
+  position: relative;
 }
 
 .outer-label {
@@ -173,4 +174,14 @@ input[type="text"] {
 .label-text {
   display: inline-block;
   padding-bottom: 15px;
+}
+
+.delete-content-item {
+  background: url('http://www.freeiconspng.com/uploads/remove-icon-png-25.png') no-repeat;
+  height: 15px;
+  width: 15px;
+  background-size: 100%;
+  position: absolute;
+  top: 3px;
+  left: 25%;
 }
