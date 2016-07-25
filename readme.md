@@ -131,4 +131,4 @@ Upon saving, all page content is read and stored alongside it's checked status a
 [got]: ./css/images/got.png
 [guns]: ./css/images/guns.png
 [racist]: ./css/images/racist.png
-[trump]: ./trump.png
+[trump]: ./css/images/trump.png
