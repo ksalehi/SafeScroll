@@ -100,6 +100,13 @@ function createCategory(string, check) {
   let label = $(`<label><div class="label-text">${string}</div></label>`).addClass('outer-label').attr('id', `${stringId}`);
   let newDiv = $('<div></div>').addClass('content-category collapsed');
   newDiv.append(label);
+
+  if (check === "true") {
+    check = true;
+  } else {
+    check = false;
+  }
+
   let category = $('<input/>', {
     "class": "category",
     type: "checkbox",
