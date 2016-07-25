@@ -6,7 +6,7 @@ Chrome extension offering content screening.
 
 SafeScroll is a Chrome extension that gives users the power of content screening. Intended for trauma survivors, SafeScroll reads your webpage before you do and will throw up a removable block between you and the content you don't want to see.
 
-All screens are easily removed with a small lock icon in the top-right corner. SafeScroll can act as a preemptive warning for possibly triggering material, but you always have the ability to dismiss the warning. If you decide you actually didn't want to see what was beneath, simply click the item again to put the screen back in place.
+All content screens are easily removed by clicking the lock icon in the top-right corner. SafeScroll can act as a preemptive warning for possibly triggering material, but you always have the ability to dismiss the warning. If you decide you actually didn't want to see what was beneath, simply click the lock icon again to put the screen back in place.
 
 SafeScroll screening is fully customizable -- use default settings or dive into the details to block exactly what you need to.
 
@@ -14,25 +14,32 @@ SafeScroll screening is fully customizable -- use default settings or dive into 
 
 ### Gun Violence
 
-Use SafeScroll to broadly block out news stories of gun violence, or narrow it in on particularly relevant events.
+Use SafeScroll to broadly block out news stories of gun violence, or narrow it down to particularly relevant events by entering custom settings.
 
 ![guns]
 
 ### Hate Language
 
-Screen out hateful language from social media.
+Screen out hate speech from social media.
 
-![racist]
+![racism]
+
+
+### Customize settings
+
+Users can create new categories and sub-fields and remove existing ones to customize what content is blocked.
+
+![options_page]
 
 ### Powerful
 
-Intended as a powerful tool to assist survivors after traumatic events, SafeScroll is at home screening out massive amounts of news sources. Here we're blocking all stories related to Trump -- with a couple unhidden that we decided we wanted to peek at.
+SafeScroll is a powerful tool for screening out unwanted material, whether it's a relatively rare term or a name that's over the news. Here we're blocking all stories related to Donald Trump -- with a couple unhidden that we decided we wanted to peek at.
 
 ![trump]
 
 ### Widely Applicable
 
-While SafeScroll was built to address very serious issues, the same technology is just as adept handling more frivolous applications. New episode of Game of Thrones released that you haven't gotten to? Afraid of spoilers? Block out all mentions of Game of Thrones and related words until you get caught up!
+While SafeScroll was built to address very serious issues, the same technology is just as adept handling more frivolous applications. Haven't gotten to the latest episode of Game of Thrones? Afraid of spoilers? Block out all mentions of Game of Thrones and related words until you get caught up!
 
 ![got]
 
@@ -40,7 +47,7 @@ While SafeScroll was built to address very serious issues, the same technology i
 
 ### Screening
 
-Screening is achieved through walking the DOM tree and comparing each text node to Regex expressions generated through users' interactions with the options page. Each time a filtered work is caught, SafeScroll traverse back up the DOM tree until it finds a non-text parent container with display block and inserts a div that blocks out the content underneath.
+Screening is achieved by traversing the DOM tree and comparing each text node to regular expressions generated through users' input on the options page. Each time a filtered word or phrase is caught, SafeScroll retraces its steps back up the DOM tree until it finds a non-text parent container whose CSS `display` property is set to `block`, and inserts a div of the same size overtop to hide the content underneath.
 
 ```javascript
 function findParentContainer(elementNode) {
@@ -72,7 +79,7 @@ function generateWarning(parentNode) {
 
 ### Locks
 
-Each screen is equipped with a lock icon to control its display properties. Upon creation of a screen, a lock element is attached to the parent container that's being blocked. The lock is fashioned with an eventListener on click that toggles the class of the inserted screen.
+Each screen is equipped with a lock icon to control its display properties. Upon creation of a screen, a lock element is attached to the parent container that's being blocked. The lock is outfitted with a jQuery click listener that toggles the class of the inserted screen to hide or reveal the content beneath.
 
 ```javascript
 function toggleLock(element) {
@@ -91,7 +98,7 @@ function toggleLock(element) {
 
 ### Options
 
-Users control and customize the extension through interaction with the options page and integration with Chrome Storage API. Input fields create DOM elements through jQuery and insert them directly into the page.
+Users control and customize the extension through interaction with the options page and integration with Chrome Storage API. Input fields create DOM elements through jQuery and insert them directly onto the page.
 
 ```javascript
 function createItem(category, check, value) {
@@ -125,10 +132,10 @@ function createItem(category, check, value) {
 }
 ```
 
-Upon saving, all page content is read and stored alongside it's checked status and category. This is all saved through Chrome Storage, rendering it accessible by the web page script and upon revisiting the options page.
+Upon saving, all page content is read and stored alongside its checked/unchecked status and category. This is all saved through Chrome Storage, rendering it accessible by the web page script and upon revisiting the options page.
 
 
 [got]: ./css/images/got.png
 [guns]: ./css/images/guns.png
-[racist]: ./css/images/racist.png
+[racism]: ./css/images/racism.png
 [trump]: ./css/images/trump.png
