@@ -220,13 +220,12 @@ function createCategory(string, check, regenerate) {
 }
 
 function createItem(category, check, value) {
-  const formClass = category;
-  const parent = $(`#${formClass}`);
+  const parent = $(`#${category}`);
   let input;
   if (value) {
     input = value;
   } else {
-    input = $(`#${formClass}-input`).val();
+    input = $(`#${category}-input`).val();
   }
 
   if (check === "true") {
@@ -247,8 +246,7 @@ function createItem(category, check, value) {
     deleteContentItem(e);
   });
   $(parent).append(label.prepend(newItem).append(deleteDiv));
-  $('.custom-content').val(''); // clear input fields
-
+  $('.custom-content').val('');
 }
 
 $(document).ready(() => {
