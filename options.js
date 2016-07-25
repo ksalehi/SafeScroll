@@ -47,15 +47,11 @@ function restoreOptions() {
       }
     });
     $('.down').on('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleDropdown(e);
+      addDropdownListener(e);
     });
 
     $('.up').on('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleDropdown(e);
+      addDropdownListener(e);
     });
 
     items.blockContent.forEach(content => {
@@ -66,6 +62,12 @@ function restoreOptions() {
       }
     });
   });
+}
+
+function addDropdownListener(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  toggleDropdown(e);
 }
 
 function toggleDropdown(e) {
@@ -92,7 +94,12 @@ function createCategory(string) {
     value: `${stringId}`
   });
   label.prepend(category);
-  label.prepend($('<div class="dropdown-icon down"></div>'));
+  let dropdown = $('<div class="dropdown-icon down"></div>');
+  label.prepend(dropdown);
+
+  dropdown.on('click', e => {
+    addDropdownListener(e);
+  });
 
   let contentItemForm = $('<form/>', {
     "class": `${stringId} item-form`,
@@ -106,7 +113,7 @@ function createCategory(string) {
     id: `${stringId}-input`,
     type: 'text',
     placeholder: "Enter text",
-    vale: "",
+    value: "",
   });
 
   let contentItemSubmit = $('<input/>', {
