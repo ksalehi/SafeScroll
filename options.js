@@ -1,8 +1,7 @@
 // Saves options to chrome.storage
 function saveOptions() {
   let categories = $('.category').toArray().map(category => category.value);
-  let content = $('.content-item:checked').toArray().map(input => `${input.value},${input.parentNode.parentNode.id}`);
-  console.log(content);
+  let content = $('.content-item').toArray().map(input => `${input.value},${input.parentNode.parentNode.id}`);
   chrome.storage.sync.set({
     categories: categories,
     blockContent: content,
@@ -32,11 +31,11 @@ function restoreOptions() {
       }
     });
 
-    let contentNames = items.blockContent.map(content => content.split(',')[0])
+    let contentNames = items.blockContent.map(content => content.split(',')[0]);
     $('#options-content .content-item').toArray().forEach(input => {
       if (contentNames.includes(input.value)) {
         input.checked = true;
-        let index = contentNames.indexOf(input.value)
+        let index = contentNames.indexOf(input.value);
         items.blockContent.splice(index, 1); // so only custom labels are left
         contentNames.splice(index, 1);
       }
@@ -93,7 +92,7 @@ function createCategory(string) {
     value: `${stringId}`
   });
   label.prepend(category);
-  label.prepend($('<div class="dropdown-icon"></div>'));
+  label.prepend($('<div class="dropdown-icon down"></div>'));
 
   let contentItemForm = $('<form/>', {
     "class": `${stringId} item-form`,
