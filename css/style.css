@@ -103,6 +103,7 @@
 .outer-label {
   font-weight: bold;
   padding: 15px;
+  position: relative;
 }
 
 button {
@@ -184,4 +185,30 @@ input[type="text"] {
   position: absolute;
   top: 3px;
   left: 25%;
+}
+
+.delete-content-item:hover {
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  background-size: 100%;
+  position: absolute;
+  top: 3px;
+  left: 25%;
+}
+
+.delete-category {
+  background: url('http://www.freeiconspng.com/uploads/remove-icon-png-25.png') no-repeat;
+  height: 15px;
+  width: 15px;
+  background-size: 100%;
+  position: absolute;
+  top: 17px;
+  left: 0;
+}
+
+.delete-category:hover {
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
 }

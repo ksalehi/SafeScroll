@@ -74,6 +74,13 @@ function restoreOptions() {
       addDropdownListener(e);
     });
 
+    $('.delete-content-item').on('click', e => {
+      deleteContentItem(e);
+    });
+    $('.delete-category').on('click', e => {
+      deleteCategory(e);
+    });
+
     items.blockContent.forEach(content => {
       if (content) {
         let category = content.split(',')[1];
@@ -82,6 +89,23 @@ function restoreOptions() {
         createItem(category, check, value);
       }
     });
+
+    $('.category').toArray().forEach((cat) => {
+      $(cat).change(() => {
+        categoryChange(cat);
+      })
+    })
+  });
+}
+
+function categoryChange(cat) {
+  let children = $(cat.parentNode).find('.content-item').toArray();
+  children.forEach((child) => {
+    if (cat.checked) {
+      child.checked = true;
+    } else {
+      child.checked = false;
+    }
   });
 }
 
@@ -89,6 +113,18 @@ function addDropdownListener(e) {
   e.preventDefault();
   e.stopPropagation();
   toggleDropdown(e);
+}
+
+function deleteContentItem(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $(e.target.parentNode).remove();
+}
+
+function deleteCategory(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $(e.target.parentNode.parentNode).remove();
 }
 
 function toggleDropdown(e) {
@@ -107,6 +143,8 @@ function toggleDropdown(e) {
 function createCategory(string, check) {
   let stringId = string.replace(" ", "-");
   let label = $(`<label><div class="label-text">${string}</div></label>`).addClass('outer-label').attr('id', `${stringId}`);
+  let deleteButton = $('<div class="delete-category"></div>');
+  label.prepend(deleteButton);
   let newDiv = $('<div></div>').addClass('content-category collapsed');
   newDiv.append(label);
 
@@ -128,6 +166,14 @@ function createCategory(string, check) {
 
   dropdown.on('click', e => {
     addDropdownListener(e);
+  });
+
+  deleteButton.on('click', e => {
+    deleteCategory(e);
+  });
+
+  $(category).change(() => {
+    categoryChange(category);
   });
 
   let contentItemForm = $('<form/>', {
@@ -188,9 +234,13 @@ function createItem(category, check, value) {
     value: `${input}`,
     checked: check
   });
-
-  $(parent).append(label.prepend(newItem));
+  const deleteDiv = $('<div class="delete-content-item"></div>');
+  deleteDiv.on('click', e => {
+    deleteContentItem(e);
+  });
+  $(parent).append(label.prepend(newItem).append(deleteDiv));
   $('.custom-content').val(''); // clear input fields
+
 }
 
 $(document).ready(() => {
