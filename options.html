@@ -47,6 +47,38 @@
         </div>
 
         <div class="content-category collapsed">
+          <label class="outer-label" id='gun-violence'><input class="category" type="checkbox" value="Gun Violence">
+            <div class="delete-category"></div>
+            <div class="label-text">Gun Violence</div>
+            <div class="dropdown-icon down"></div>
+            <label class="content-item-label">
+              <input class="content-item" type="checkbox" value="shooting">Shooting
+              <div class="delete-content-item"></div>
+            </label>
+            <label class="content-item-label">
+              <input class="content-item" type="checkbox" value="shooter">Shooter
+              <div class="delete-content-item"></div>
+            </label>
+            <label class="content-item-label">
+              <input class="content-item" type="checkbox" value="NRA">NRA
+              <div class="delete-content-item"></div>
+            </label>
+            <label class="content-item-label">
+              <input class="content-item" type="checkbox" value="mass shooting">Mass shooting
+              <div class="delete-content-item"></div>
+            </label>
+          </label>
+          <form id='gun-violence-form' class='gun-violence item-form'>
+            <label class="outer-label">Custom filter:
+              <input type="text" id='gun-violence-input'
+              placeholder="Enter text"
+              class="custom-content gun-violence"
+              value=""></label>
+            <input type="submit" class="hidden-submit"/>
+          </form>
+        </div>
+
+        <div class="content-category collapsed">
           <label class="outer-label" id='trump'><input class="category trump" type="checkbox" value="Trump">
             <div class="delete-category"></div>
             <div class="label-text">Donald Trump</div>

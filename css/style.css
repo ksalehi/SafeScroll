@@ -117,7 +117,7 @@ button {
 }
 
  .content-category {
-  margin: 15px;
+  margin: 0 0 15px 0;
   padding: 15px;
   font-size: 16px;
   display: block;
