@@ -58,14 +58,6 @@ function restoreOptions() {
       }
     });
 
-    items.categories.forEach(customCategory => {
-      // regenerate custom categories
-      if (customCategory) {
-        let name = customCategory.split(',')[0];
-        let check = customCategory.split(',')[1];
-        createCategory(name, check);
-      }
-    });
     $('.down').on('click', e => {
       addDropdownListener(e);
     });
@@ -77,8 +69,18 @@ function restoreOptions() {
     $('.delete-content-item').on('click', e => {
       deleteContentItem(e);
     });
+
     $('.delete-category').on('click', e => {
       deleteCategory(e);
+    });
+
+    items.categories.forEach(customCategory => {
+      // regenerate custom categories
+      if (customCategory) {
+        let name = customCategory.split(',')[0];
+        let check = customCategory.split(',')[1];
+        createCategory(name, check);
+      }
     });
 
     items.blockContent.forEach(content => {
@@ -173,7 +175,7 @@ function createCategory(string, check) {
   });
 
   $(category).change(() => {
-    categoryChange(category);
+    categoryChange(category[0]);
   });
 
   let contentItemForm = $('<form/>', {
