@@ -182,4 +182,6 @@ input[type="text"] {
   width: 15px;
   background-size: 100%;
   position: absolute;
+  top: 3px;
+  left: 25%;
 }

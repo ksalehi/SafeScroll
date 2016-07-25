@@ -1,7 +1,8 @@
 // Saves options to chrome.storage
 function saveOptions() {
-  let categories = $('.category').toArray().map(category => category.value);
-  let content = $('.content-item').toArray().map(input => `${input.value},${input.parentNode.parentNode.id}`);
+  let categories = $('.category').toArray().map(category => `${category.value},${category.checked}`);
+  let content = $('.content-item').toArray().map(input => `${input.value},${input.parentNode.parentNode.id},${input.checked}`);
+  console.log(categories);
   chrome.storage.sync.set({
     categories: categories,
     blockContent: content,
@@ -42,12 +43,19 @@ function restoreOptions() {
     });
 
     let contentNames = items.blockContent.map(content => content.split(',')[0]);
+    let contentChecks = items.blockContent.map(content => content.split(',')[2]);
     $('#options-content .content-item').toArray().forEach(input => {
       if (contentNames.includes(input.value)) {
-        input.checked = true;
         let index = contentNames.indexOf(input.value);
+        if (contentChecks[index] === "true") {
+           input.checked = true;
+         } else {
+           input.checked = false;
+         }
         items.blockContent.splice(index, 1); // so only custom labels are left
         contentNames.splice(index, 1);
+        contentChecks.splice(index, 1);
+
       }
     });
 
@@ -71,7 +79,9 @@ function restoreOptions() {
       if (content) {
         let category = content.split(',')[1];
         let value = content.split(',')[0];
-        createItem(category, value);
+        let check = content.split(',')[2];
+        createItem(category, check, value);
+
       }
     });
   });
@@ -102,11 +112,11 @@ function createCategory(string, check) {
   let newDiv = $('<div></div>').addClass('content-category collapsed');
   newDiv.append(label);
 
-  if (check === "true") {
-    check = true;
-  } else {
-    check = false;
-  }
+   if (check === "true") {
+     check = true;
+   } else {
+     check = false;
+   }
 
   let category = $('<input/>', {
     "class": "category",
@@ -144,7 +154,7 @@ function createCategory(string, check) {
 
   $(contentItemForm).submit((e) => {
     e.preventDefault();
-    createItem(stringId);
+    createItem(stringId, 'true');
   });
 
   contentFormLabel.append(contentItemInput);
@@ -157,7 +167,7 @@ function createCategory(string, check) {
   $('.custom-category').val(''); // clear input field
 }
 
-function createItem(category, value) {
+function createItem(category, check, value) {
   const formClass = category;
   const parent = $(`#${formClass}`);
   let input;
@@ -167,12 +177,19 @@ function createItem(category, value) {
     input = $(`#${formClass}-input`).val();
   }
 
+
+   if (check === "true") {
+     check = true;
+   } else {
+     check = false;
+   }
+
   const label = $(`<label class="content-label ${input}">${input}</label>`);
   const newItem = $('<input/>', {
     "class": "content-item",
     type: "checkbox",
     value: `${input}`,
-    checked: true
+    checked: check
   });
 
   $(parent).append(label.prepend(newItem));
@@ -200,7 +217,7 @@ $(document).ready(() => {
     itemForms.toArray().forEach((form) => {
       $(form).submit((e) => {
         e.preventDefault();
-        createItem($(form).attr('class').split(' ')[0]);
+        createItem($(form).attr('class').split(' ')[0], 'true');
       });
     });
   }
