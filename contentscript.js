@@ -5,7 +5,9 @@ chrome.storage.sync.get(
   'blockContent', function(items) {
     let toBlock = []
     items.blockContent.forEach((item) => {
-      toBlock.push(item.split(",")[0]);
+      if (item.split(",")[2] === "true") {
+        toBlock.push(item.split(",")[0]);
+      }
     })
     block = toBlock;
     console.log(block);
