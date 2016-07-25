@@ -212,3 +212,7 @@ input[type="text"] {
   height: 18px;
   width: 18px;
 }
+
+.intro {
+  font-size: 16px;
+}

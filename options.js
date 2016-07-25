@@ -79,7 +79,7 @@ function restoreOptions() {
       if (customCategory) {
         let name = customCategory.split(',')[0];
         let check = customCategory.split(',')[1];
-        createCategory(name, check);
+        createCategory(name, check, 'true');
       }
     });
 
@@ -142,12 +142,12 @@ function toggleDropdown(e) {
   }
 }
 
-function createCategory(string, check) {
+function createCategory(string, check, regenerate) {
   let stringId = string.replace(" ", "-");
   let label = $(`<label><div class="label-text">${string}</div></label>`).addClass('outer-label').attr('id', `${stringId}`);
   let deleteButton = $('<div class="delete-category"></div>');
   label.prepend(deleteButton);
-  let newDiv = $('<div></div>').addClass('content-category collapsed');
+  let newDiv = $('<div></div>').addClass('content-category');
   newDiv.append(label);
 
    if (check === "true") {
@@ -163,7 +163,13 @@ function createCategory(string, check) {
     checked: check,
   });
   label.prepend(category);
-  let dropdown = $('<div class="dropdown-icon down"></div>');
+  let dropdown;
+  if (regenerate === "true") {
+    dropdown = $('<div class="dropdown-icon down"></div>');
+    newDiv.addClass('collapsed');
+  } else {
+    dropdown = $('<div class="dropdown-icon up"></div>');
+  }
   label.prepend(dropdown);
 
   dropdown.on('click', e => {
@@ -257,7 +263,7 @@ $(document).ready(() => {
   if (customCategorySubmit) {
     customCategorySubmit.addEventListener('submit', e => {
       e.preventDefault();
-      createCategory($('.custom-category').val(), "true"); // pass in text field value
+      createCategory($('.custom-category').val(), "true", 'false'); // pass in text field value
     });
   }
 
