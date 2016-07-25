@@ -1,7 +1,10 @@
 // Saves options to chrome.storage
 function saveOptions() {
-  let content = $('#options-content input:checked').toArray().map(input => input.value);
+  let categories = $('.category').toArray().map(category => category.value);
+  let content = $('.content-item:checked').toArray().map(input => `${input.value},${input.parentNode.parentNode.id}`);
+  console.log(content);
   chrome.storage.sync.set({
+    categories: categories,
     blockContent: content,
   }, function() {
     // Update status to let user know options were saved.
@@ -18,32 +21,46 @@ function saveOptions() {
 function restoreOptions() {
   // Use default value color = 'red' and likesColor = true.
   chrome.storage.sync.get({
-    blockContent: ['Trump'],
+    categories: ['trump'],
+    blockContent: ['trump'],
   }, function(items) {
     // restore which boxes are checked:
-    $('#options-content input').toArray().forEach(input => {
-      // document.getElementById("checkbox").checked = true;
-      if (items.blockContent.includes(input.value)) {
-        input.checked = true;
-        items.blockContent.splice(items.blockContent.indexOf(input.value), 1); // so only custom labels are left
+    $('#options-content .category').toArray().forEach(category => {
+      if (items.categories.includes(category.value)) {
+        category.checked = true;
+        items.categories.splice(items.categories.indexOf(category.value), 1);
       }
     });
-    items.blockContent.forEach(customCategory => {
-      // regenerate custom categories
-      let label = $(`<label>${customCategory}</label>`).addClass('outer-label');
-      let category = $(`<input class="category" type="checkbox" value='${customCategory}'>`);
-      label.prepend(category);
-      label.prepend($('<div class="dropdown-icon"></div>'));
-      category[0].checked = true;
-      $('#options-content').append(label);
+
+    let contentNames = items.blockContent.map(content => content.split(',')[0])
+    $('#options-content .content-item').toArray().forEach(input => {
+      if (contentNames.includes(input.value)) {
+        input.checked = true;
+        let index = contentNames.indexOf(input.value)
+        items.blockContent.splice(index, 1); // so only custom labels are left
+        contentNames.splice(index, 1);
+      }
     });
+    items.categories.forEach(customCategory => {
+      // regenerate custom categories
+      if (customCategory) {
+        createCategory(customCategory);
+      }
+    });
+
+    items.blockContent.forEach(content => {
+      if (content) {
+        let category = content.split(',')[1];
+        let value = content.split(',')[0];
+        createItem(category, value);
+      }
+    })
   });
 }
 
 function createCategory(string) {
   stringId = string.replace(" ", "-");
   let label = $(`<label>${string}</label>`).addClass('outer-label').attr('id', `${stringId}`);
-  // let category = $(`<input class="category" type="checkbox" value='${string}'>`);
   let category = $('<input/>', {
     "class": "category",
     type: "checkbox",
@@ -51,16 +68,6 @@ function createCategory(string) {
   });
   label.prepend(category);
   label.prepend($('<div class="dropdown-icon"></div>'));
-
-  // let contentItemLabel = $(`<label class="content-item">${string}</label>`)
-  // let contentItem = $('<input/>', {
-  //   "class": "content-item",
-  //   type: "checkbox",
-  //   value: `${string}`,
-  //   id: `${string}-item`
-  // });
-
-  // label.append(contentItemLabel.prepend(contentItem))
 
   let contentItemForm = $('<form/>', {
     "class": `${stringId} item-form`,
@@ -84,7 +91,7 @@ function createCategory(string) {
 
   $(contentItemForm).submit((e) => {
     e.preventDefault();
-    createItem(contentItemForm);
+    createItem(stringId);
   })
 
   contentFormLabel.append(contentItemInput);
@@ -97,16 +104,21 @@ function createCategory(string) {
   $('.custom-category').val(''); // clear input field
 }
 
-function createItem(form) {
-  const formClass = $(form).attr('class').split(' ')[0]
+function createItem(category, value) {
+  const formClass = category
   const parent = $(`#${formClass}`);
-  const input = $(`#${formClass}-input`)
+  let input
+  if (value) {
+    input = value;
+  } else {
+    input = $(`#${formClass}-input`).val()
+  }
 
-  const label = $(`<label class="content-label ${input.val()}">${input.val()}</label>`);
+  const label = $(`<label class="content-label ${input}">${input}</label>`);
   const newItem = $('<input/>', {
     "class": "content-item",
     type: "checkbox",
-    value: `${input.val()}`,
+    value: `${input}`,
     checked: true
   });
 
@@ -129,21 +141,12 @@ $(document).ready(() => {
     });
   }
 
-  // let sexualtAssaultSubmit = document.getElementById('sexual-assault-form');
-  // if (sexualtAssaultSubmit) {
-  //   sexualtAssaultSubmit.addEventListener('submit', e => {
-  //     e.preventDefault();
-  //     createItem($('#sexual-assault-input').val());
-  //   })
-  // }
-
   let itemForms = $('.item-form');
-  console.log(itemForms);
   if (itemForms) {
     itemForms.toArray().forEach((form) => {
       $(form).submit((e) => {
         e.preventDefault();
-        createItem(form);
+        createItem($(form).attr('class').split(' ')[0]);
       });
     });
   }
