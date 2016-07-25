@@ -61,6 +61,8 @@ function restoreOptions() {
 function createCategory(string) {
   stringId = string.replace(" ", "-");
   let label = $(`<label>${string}</label>`).addClass('outer-label').attr('id', `${stringId}`);
+  let newDiv = $('<div></div>').addClass('content-category');
+  newDiv.append(label);
   let category = $('<input/>', {
     "class": "category",
     type: "checkbox",
@@ -97,21 +99,21 @@ function createCategory(string) {
   contentFormLabel.append(contentItemInput);
   contentItemForm.append(contentFormLabel);
   contentItemForm.append(contentItemSubmit);
-  label.append(contentItemForm);
+  newDiv.append(contentItemForm);
 
   category[0].checked = true;
-  $('#options-content').append(label);
+  $('#options-content').append(newDiv);
   $('.custom-category').val(''); // clear input field
 }
 
 function createItem(category, value) {
-  const formClass = category
+  const formClass = category;
   const parent = $(`#${formClass}`);
-  let input
+  let input;
   if (value) {
     input = value;
   } else {
-    input = $(`#${formClass}-input`).val()
+    input = $(`#${formClass}-input`).val();
   }
 
   const label = $(`<label class="content-label ${input}">${input}</label>`);
@@ -123,6 +125,7 @@ function createItem(category, value) {
   });
 
   $(parent).append(label.prepend(newItem));
+  $('.custom-content').val(''); // clear input fields
 }
 
 $(document).ready(() => {
