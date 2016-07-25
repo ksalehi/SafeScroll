@@ -47,6 +47,12 @@ function restoreOptions() {
         createCategory(customCategory);
       }
     });
+    $('.dropdown-icon').on('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      let outerDiv = $(e.target.parentNode.parentNode);
+      outerDiv.removeClass('collapsed');
+    });
 
     items.blockContent.forEach(content => {
       if (content) {
@@ -54,14 +60,14 @@ function restoreOptions() {
         let value = content.split(',')[0];
         createItem(category, value);
       }
-    })
+    });
   });
 }
 
 function createCategory(string) {
-  stringId = string.replace(" ", "-");
-  let label = $(`<label>${string}</label>`).addClass('outer-label').attr('id', `${stringId}`);
-  let newDiv = $('<div></div>').addClass('content-category');
+  let stringId = string.replace(" ", "-");
+  let label = $(`<label><div class="label-text">${string}</div></label>`).addClass('outer-label').attr('id', `${stringId}`);
+  let newDiv = $('<div></div>').addClass('content-category collapsed');
   newDiv.append(label);
   let category = $('<input/>', {
     "class": "category",
@@ -76,7 +82,7 @@ function createCategory(string) {
     id: `${stringId}-form`
   });
 
-  let contentFormLabel = $(`<label class="outer-label">Custom filter</label>`);
+  let contentFormLabel = $(`<label class="outer-label">Custom filter: </label>`);
 
   let contentItemInput = $('<input/>', {
     "class": `custom-content ${stringId}`,
@@ -84,7 +90,7 @@ function createCategory(string) {
     type: 'text',
     placeholder: "Enter text",
     vale: "",
-  })
+  });
 
   let contentItemSubmit = $('<input/>', {
     type: 'submit',
@@ -94,7 +100,7 @@ function createCategory(string) {
   $(contentItemForm).submit((e) => {
     e.preventDefault();
     createItem(stringId);
-  })
+  });
 
   contentFormLabel.append(contentItemInput);
   contentItemForm.append(contentFormLabel);

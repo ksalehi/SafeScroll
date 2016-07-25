@@ -154,5 +154,14 @@ input[type="text"] {
 
 .dropdown-icon:hover {
   cursor: pointer;
+}
 
+.collapsed {
+  max-height: 20px;
+  overflow: hidden;
+}
+
+.label-text {
+  display: inline-block;
+  padding-bottom: 15px;
 }
