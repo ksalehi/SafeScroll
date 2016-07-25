@@ -24,10 +24,20 @@ function restoreOptions() {
     blockContent: ['trump'],
   }, function(items) {
     // restore which boxes are checked:
+
+    let categoryNames = items.categories.map(category => category.split(',')[0]);
+    let categoryChecks =items.categories.map(category => category.split(',')[1]);
     $('#options-content .category').toArray().forEach(category => {
-      if (items.categories.includes(category.value)) {
-        category.checked = true;
-        items.categories.splice(items.categories.indexOf(category.value), 1);
+      if (categoryNames.includes(category.value)) {
+        let index = categoryNames.indexOf(category.value);
+        if (categoryChecks[index] === "true") {
+          category.checked = true;
+        } else {
+          category.checked = false;
+        }
+        items.categories.splice(index, 1);
+        categoryNames.splice(index, 1);
+        categoryChecks.splice(index, 1);
       }
     });
 
@@ -40,10 +50,13 @@ function restoreOptions() {
         contentNames.splice(index, 1);
       }
     });
+
     items.categories.forEach(customCategory => {
       // regenerate custom categories
       if (customCategory) {
-        createCategory(customCategory);
+        let name = customCategory.split(',')[0];
+        let check = customCategory.split(',')[1];
+        createCategory(name, check);
       }
     });
     $('.down').on('click', e => {
@@ -83,15 +96,23 @@ function toggleDropdown(e) {
   }
 }
 
-function createCategory(string) {
+function createCategory(string, check) {
   let stringId = string.replace(" ", "-");
   let label = $(`<label><div class="label-text">${string}</div></label>`).addClass('outer-label').attr('id', `${stringId}`);
   let newDiv = $('<div></div>').addClass('content-category collapsed');
   newDiv.append(label);
+
+  if (check === "true") {
+    check = true;
+  } else {
+    check = false;
+  }
+
   let category = $('<input/>', {
     "class": "category",
     type: "checkbox",
-    value: `${stringId}`
+    value: `${stringId}`,
+    checked: check,
   });
   label.prepend(category);
   let dropdown = $('<div class="dropdown-icon down"></div>');
@@ -131,7 +152,7 @@ function createCategory(string) {
   contentItemForm.append(contentItemSubmit);
   newDiv.append(contentItemForm);
 
-  category[0].checked = true;
+  // category[0].checked = true;
   $('#options-content').append(newDiv);
   $('.custom-category').val(''); // clear input field
 }
@@ -170,7 +191,7 @@ $(document).ready(() => {
   if (customCategorySubmit) {
     customCategorySubmit.addEventListener('submit', e => {
       e.preventDefault();
-      createCategory($('.custom-category').val()); // pass in text field value
+      createCategory($('.custom-category').val(), "true"); // pass in text field value
     });
   }
 
