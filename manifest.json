@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Safe Scroll",
+  "name": "SafeScroll",
   "description": "Covers blocked content with a removable screen",
-  "version": "1.0",
+  "version": "1.1",
   "options_page": "options.html",
 
   "browser_action": {

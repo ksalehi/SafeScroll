@@ -1,15 +1,18 @@
 // Saves options to chrome.storage
 function saveOptions() {
-  let categories = $('.category').toArray().map(category => `${category.value},${category.checked}`);
-  let content = $('.content-item').toArray().map(input => `${input.value},${input.parentNode.parentNode.id},${input.checked}`);
-  console.log(categories);
+  let categories = $('.category').toArray().map(category => {
+    return `${category.value},${category.checked}`;
+  });
+  let content = $('.content-item').toArray().map(input => {
+    return `${input.value},${input.parentNode.parentNode.id},${input.checked}`;
+  });
   chrome.storage.sync.set({
     categories: categories,
     blockContent: content,
   }, function() {
     // Update status to let user know options were saved.
-    let status = document.getElementById('status');
-    status.textContent = 'Options saved.';
+    let status = $('#status');
+    status[0].textContent = 'Options saved.';
     setTimeout(function() {
       status.textContent = '';
     }, 750);
@@ -19,26 +22,19 @@ function saveOptions() {
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restoreOptions() {
-  // Use default value color = 'red' and likesColor = true.
   chrome.storage.sync.get({
     categories: ['trump'],
     blockContent: ['trump'],
   }, function(items) {
     // restore which boxes are checked:
-
     let categoryNames = items.categories.map(category => category.split(',')[0]);
     let categoryChecks =items.categories.map(category => category.split(',')[1]);
+
     $('#options-content .category').toArray().forEach(category => {
       if (categoryNames.includes(category.value)) {
         let index = categoryNames.indexOf(category.value);
-        if (categoryChecks[index] === "true") {
-          category.checked = true;
-        } else {
-          category.checked = false;
-        }
-        items.categories.splice(index, 1);
-        categoryNames.splice(index, 1);
-        categoryChecks.splice(index, 1);
+        category.checked = (categoryChecks[index] === "true" ? true : false);
+        spliceContent([items.categories, categoryNames, categoryChecks], index);
       }
     });
 
@@ -47,32 +43,12 @@ function restoreOptions() {
     $('#options-content .content-item').toArray().forEach(input => {
       if (contentNames.includes(input.value)) {
         let index = contentNames.indexOf(input.value);
-        if (contentChecks[index] === "true") {
-           input.checked = true;
-         } else {
-           input.checked = false;
-         }
-        items.blockContent.splice(index, 1); // so only custom labels are left
-        contentNames.splice(index, 1);
-        contentChecks.splice(index, 1);
+        input.checked = (contentChecks[index] === "true" ? true : false);
+        spliceContent([items.blockContent, contentNames, contentChecks], index);
       }
     });
 
-    $('.down').on('click', e => {
-      addDropdownListener(e);
-    });
-
-    $('.up').on('click', e => {
-      addDropdownListener(e);
-    });
-
-    $('.delete-content-item').on('click', e => {
-      deleteContentItem(e);
-    });
-
-    $('.delete-category').on('click', e => {
-      deleteCategory(e);
-    });
+    addListeners();
 
     items.categories.forEach(customCategory => {
       // regenerate custom categories
@@ -95,19 +71,38 @@ function restoreOptions() {
     $('.category').toArray().forEach((cat) => {
       $(cat).change(() => {
         categoryChange(cat);
-      })
-    })
+      });
+    });
   });
+}
+
+function addListeners() {
+  $('.down').on('click', e => {
+    addDropdownListener(e);
+  });
+
+  $('.up').on('click', e => {
+    addDropdownListener(e);
+  });
+
+  $('.delete-content-item').on('click', e => {
+    deleteContentItem(e);
+  });
+
+  $('.delete-category').on('click', e => {
+    deleteCategory(e);
+  });
+}
+
+function spliceContent(items, index) {
+  items.forEach( item => item.splice(index, 1));
+  // so only custom categories / subfields are left
 }
 
 function categoryChange(cat) {
   let children = $(cat.parentNode).find('.content-item').toArray();
   children.forEach((child) => {
-    if (cat.checked) {
-      child.checked = true;
-    } else {
-      child.checked = false;
-    }
+    child.checked = (cat.checked ? true : false);
   });
 }
 
@@ -150,11 +145,7 @@ function createCategory(string, check, regenerate) {
   let newDiv = $('<div></div>').addClass('content-category');
   newDiv.append(label);
 
-   if (check === "true") {
-     check = true;
-   } else {
-     check = false;
-   }
+  check = (check === "true" ? true : false);
 
   let category = $('<input/>', {
     "class": "category",
@@ -214,7 +205,6 @@ function createCategory(string, check, regenerate) {
   contentItemForm.append(contentItemSubmit);
   newDiv.append(contentItemForm);
 
-  // category[0].checked = true;
   $('#options-content').append(newDiv);
   $('.custom-category').val(''); // clear input field
 }
@@ -242,26 +232,23 @@ function createItem(category, check, value) {
     checked: check
   });
   const deleteDiv = $('<div class="delete-content-item"></div>');
-  deleteDiv.on('click', e => {
-    deleteContentItem(e);
-  });
+  deleteDiv.on('click', e => deleteContentItem(e));
   $(parent).append(label.prepend(newItem).append(deleteDiv));
   $('.custom-content').val('');
 }
 
 $(document).ready(() => {
   restoreOptions();
-  let saveButton = document.getElementById('save-button');
+  let saveButton = $('#save-button');
   if (saveButton) {
-    saveButton.addEventListener('click',
-        saveOptions);
+    saveButton.on('click', saveOptions);
   }
 
-  let customCategorySubmit = document.getElementById('custom-category-form');
+  let customCategorySubmit = $('#custom-category-form');
   if (customCategorySubmit) {
-    customCategorySubmit.addEventListener('submit', e => {
+    customCategorySubmit.on('submit', e => {
       e.preventDefault();
-      createCategory($('.custom-category').val(), "true", 'false'); // pass in text field value
+      createCategory($('.custom-category').val(), 'true', 'false'); // pass in text field value
     });
   }
 
@@ -274,40 +261,4 @@ $(document).ready(() => {
       });
     });
   }
-
-  // const sexualAssault = $('.category.sexual-assault')[0];
-  // const trump = $('.category.trump')[0];
-
-  // const contentItemSubmit = $('<form class="content-form"><label class="content-item-label">Custom item: <input type="text" placeholder="Enter text" class="custom-item" value=""></label><input type="submit" class="hidden-submit"/></form>')
-  // $('.outer-label').append(contentItemSubmit);
-  // $('.content-form').toArray.forEach(form => {
-  //   form.addEventListener('submit', e => {
-  //     e.preventDefault();
-  //
-  //   });
-  // })
-
-  // $(sexualAssault).change(() => {
-  //   let categoryParent = $('.category.sexual-assault')[0].parentNode
-  //   $(categoryParent).children('.content-item').toArray().forEach((input) => {
-  //     if (sexualAssault.checked) {
-  //       input.checked = true;
-  //     } else {
-  //       input.checked = false;
-  //     }
-  //   })
-  // });
-  //
-  // $(trump).change(() => {
-  //   let categoryParent = $('.category.trump')[0].parentNode
-  //   $(categoryParent).children('.content-item').toArray().forEach((input) => {
-  //     if (trump.checked) {
-  //       input.checked = true;
-  //     } else {
-  //       input.checked = false;
-  //     }
-  //   })
-  // });
-
-
 });
