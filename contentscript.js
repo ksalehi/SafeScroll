@@ -2,8 +2,9 @@ const contentStore = {};
 let block = ["Trump"];
 
 chrome.storage.sync.get(
-  'blockContent', function(items) {
+  {blockContent: [], disabled: false}, function(items) {
     let toBlock = []
+    console.log(items);
     items.blockContent.forEach((item) => {
       if (item.split(",")[2] === "true") {
         toBlock.push(item.split(",")[0]);
@@ -11,7 +12,10 @@ chrome.storage.sync.get(
     })
     block = toBlock;
     console.log(block);
-    walkAndObserve(document);
+    console.log(items.disabled);
+    if (!items.disabled) {
+      walkAndObserve(document);
+    }
 });
 
 function walk(rootNode)
@@ -36,27 +40,42 @@ function handleText(textNode) {
     let toMatch = new RegExp(string, "i");
     if (textNode.textContent.match(toMatch) &&
           !$(textNode.parentNode).is('script')) {
-
-      let parentNode = findParentContainer(textNode);
-      if (!$(parentNode).find('.extension-warning')[0] && parentNode.localName !== 'body') {
-        let warning = generateWarning(parentNode);
-        $(parentNode).addClass('pos-rel');
-        $(parentNode).append(warning);
-      }
+      findParentContainer(textNode);
+      // let parentNode = findParentContainer(textNode);
+      // if (!$(parentNode).find('.extension-warning')[0] && parentNode.localName !== 'body') {
+      // }
+      // let warning = generateWarning(parentNode);
+      // $(parentNode).addClass('pos-rel');
+      // $(parentNode).append(warning);
     }
   });
 }
 
 function findParentContainer(elementNode) {
-  const texts = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span", "a"];
+  // debugger
+  const texts = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span", "a", "body"];
   let node = elementNode.parentNode;
+  let searchingForTarget = true
+  let addWarning = true
+  let target
   while (node) {
-    if (($(node).css('display') === 'block') && (
-        !texts.includes(node.localName))) {
-      return node;
-    } else {
-      node = node.parentNode;
+    if (node.localName === "body") {
+      break;
     }
+    if (($(node).css('display') === 'block') &&
+        (!texts.includes(node.localName)) &&
+        (searchingForTarget)) {
+      target = node;
+      searchingForTarget = false;
+    }
+    if ($(node).hasClass("pos-rel")) {
+      addWarning = false;
+      break
+    }
+    node = node.parentNode;
+  }
+  if (addWarning) {
+    generateWarning(target)
   }
 }
 
@@ -70,7 +89,9 @@ function generateWarning(parentNode) {
     e.stopPropagation();
     toggleLock(this);
   });
-  return warning;
+  $(parentNode).addClass('pos-rel');
+  $(parentNode).append(warning);
+  // return warning;
 }
 
 function toggleLock(element) {
