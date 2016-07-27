@@ -12,9 +12,9 @@ function restoreOptions() {
     disableSetting = items.disabled;
     const disabled = document.getElementsByClassName('disable')[0];
     if (items.disabled === true) {
-      disabled.textContent = "Enable";
+      disabled.textContent = "Disabled";
     } else {
-      disabled.textContent = "Disable";
+      disabled.textContent = "Enabled";
     }
     // alert(disableSetting);
     setListeners();
@@ -34,14 +34,14 @@ function setListeners() {
         disabled: false
       }, () => {
         disableSetting = false;
-        disabled.textContent = "Disable";
+        disabled.textContent = "Enabled";
       })
     } else {
       chrome.storage.sync.set({
         disabled: true
       }, () => {
         disableSetting = true;
-        disabled.textContent = "Enable";
+        disabled.textContent = "Disabled";
       })
     }
   });
