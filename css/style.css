@@ -67,6 +67,27 @@
   border-radius: 25%;
 }
 
+.options-body {
+  background: #97d0c1;
+  color: black;
+  margin: 0;
+}
+
+.options-header {
+  display: flex;
+  justify-content: center;
+}
+
+.options-image {
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1469656502/icon_tmupig.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  height: 50px;
+  width: 50px;
+  margin: 5px;
+}
+
 .settings {
   display: flex;
   text-align: center;
@@ -92,7 +113,17 @@
   flex-direction: column;
   width: 75%;
   margin: 0 auto;
+  background: #eceeef;
+  padding: 50px;
 }
+
+.options-title {
+  font-weight: normal;
+  font-size: 35px;
+  text-align: center;
+  margin: 10px;
+}
+
 .category {
   font-size: 18px;
 }
@@ -131,7 +162,8 @@ button {
   padding: 15px;
   font-size: 16px;
   display: block;
-  background: lightblue;
+  background: #c0c5c7;
+  color: rgba(35,40,40,1);
   border-radius: 5px;
 }
 
@@ -205,6 +237,10 @@ input[type="text"] {
   position: absolute;
   top: 3px;
   left: 25%;
+}
+
+.options-content {
+  color: rgba(35,40,40,1);
 }
 
 .delete-category {
