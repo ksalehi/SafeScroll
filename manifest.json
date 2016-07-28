@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "SafeScroll",
-  "description": "Covers unwanted web content with a removable screen",
-  "version": "1.5",
+  "description": "Covers triggering or unwanted web content with a removable screen",
+  "version": "1.7",
   "options_page": "options.html",
 
   "browser_action": {
