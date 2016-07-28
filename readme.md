@@ -135,6 +135,14 @@ function createItem(category, check, value) {
 Upon saving, all page content is read and stored alongside its checked/unchecked status and category. This is all saved through Chrome Storage, rendering it accessible by the web page script and upon revisiting the options page.
 
 
+### Future directions
+
+In future releases we are looking to include the following features:
+
+- Color-coded screens to indicate category of underlying content
+- Customizable styling of screens
+- Crowd-sourced flagging of content that belongs to a commonly blocked category but isn't easily flagged by our algorithm, such as images and videos
+
 [got]: ./css/images/got.png
 [guns]: ./css/images/guns.png
 [racism]: ./css/images/racism.png
