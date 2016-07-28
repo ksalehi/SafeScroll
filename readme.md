@@ -1,6 +1,6 @@
-#[SAFE SCROLL]
+#SafeScroll
 
-Chrome extension offering content screening.
+Chrome extension offering content screening. [Available for download from the Chrome Web Store.](https://chrome.google.com/webstore/detail/safescroll/lkkeaiancamiccigdofacokfdjegoanm)
 
 ## Description
 
@@ -135,8 +135,7 @@ function createItem(category, check, value) {
 
 Upon saving, all page content is read and stored alongside its checked/unchecked status and category. This is all saved through Chrome Storage, rendering it accessible by the web page script and upon revisiting the options page.
 
-
-### Future directions
+## Future directions
 
 In future releases we are looking to include the following features:
 
@@ -148,4 +147,5 @@ In future releases we are looking to include the following features:
 [guns]: ./css/images/guns.png
 [racism]: ./css/images/racism.png
 [trump]: ./css/images/trump.png
+[trump2]: ./css/images/trump2.png
 [settings]: ./css/images/settings.png
