@@ -2,7 +2,7 @@ body {
   font-family: Helvetica, sans-serif;
 }
 
-input {
+input[type="text"] {
   padding: 4px;
 }
 
@@ -126,7 +126,7 @@ input {
   position: relative;
 }
 
-button {
+.extension-button {
   display: flex;
   justify-content: center;
   outline: 1px #ccc;
@@ -140,7 +140,7 @@ button {
   width: 120px;
 }
 
-button:hover {
+.extension-button:hover {
   background: #575757;
   cursor: pointer;
   transition: 0.2s ease-in-out;
