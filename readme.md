@@ -29,13 +29,14 @@ Screen out hate speech from social media.
 
 Users can create new categories and sub-fields and remove existing ones to customize what content is blocked.
 
-![options_page]
+![settings]
 
 ### Powerful
 
-SafeScroll is a powerful tool for screening out unwanted material, whether it's a relatively rare term or a name that's over the news. Here we're blocking all stories related to Donald Trump -- with a couple unhidden that we decided we wanted to peek at.
+SafeScroll is a powerful tool for screening out unwanted material, whether it's a relatively rare term or a name that's over the news. Here we're blocking all stories related to Donald Trump on the New York Times, and unhidden a Trump-related article on the LATimes that we decided we wanted to peek at (notice the toggle-able unlock symbol in the top-right corner of the article heading).
 
 ![trump]
+![trump2]
 
 ### Widely Applicable
 
@@ -147,3 +148,4 @@ In future releases we are looking to include the following features:
 [guns]: ./css/images/guns.png
 [racism]: ./css/images/racism.png
 [trump]: ./css/images/trump.png
+[settings]: ./css/images/settings.png
