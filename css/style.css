@@ -1,3 +1,6 @@
+input {
+  padding: 4px;
+}
 
 .extension-warning {
   z-index: 10;
@@ -79,32 +82,12 @@
 }
 
 .options-image {
-  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1469656502/icon_tmupig.png');
+  background-image: url('./images/lock-logo.png');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100%;
   display: block;
-  height: 50px;
   width: 50px;
   margin: 5px;
-}
-
-.settings {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  margin: 0 auto;
-}
-
-.settings:hover, #save-button:hover {
-  background: gray;
-  cursor: pointer;
-}
-
-#save-button {
-  margin: 15px auto;
-  padding: 10px;
-  width: 200px;
-  text-align: center;
 }
 
 .options-main {
@@ -148,16 +131,32 @@
 }
 
 button {
-  outline: 0;
-  border: 0;
+  display: flex;
+  justify-content: center;
+  outline: 1px #ccc;
+  border: 1px #ccc;
   border-radius: 5px;
-  background: lightgray;
+  background: #009688;
   font-size: 16px;
   padding: 5px 15px;
   text-align: center;
+  margin: 15px auto;
+  width: 120px;
 }
 
- .content-category {
+button:hover {
+  background: #575757;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  color: white;
+}
+
+#save-button {
+  padding: 10px;
+  width: 200px;
+}
+
+.content-category {
   margin: 0 0 15px 0;
   padding: 15px;
   font-size: 16px;
@@ -194,6 +193,7 @@ input[type="text"] {
   height: 20px;
   width: 20px;
   float: right;
+  transition: 1s ease;
 }
 
 .up {
@@ -203,6 +203,7 @@ input[type="text"] {
   width: 20px;
   float: right;
   transform: rotate(180deg);
+  transition: 1s ease;
 }
 
 .down:hover, .up:hover {
@@ -210,7 +211,7 @@ input[type="text"] {
 }
 
 .collapsed {
-  max-height: 20px;
+  max-height: 25px;
   overflow: hidden;
 }
 
@@ -225,7 +226,7 @@ input[type="text"] {
   width: 15px;
   background-size: 100%;
   position: absolute;
-  top: 3px;
+  top: 5px;
   left: 25%;
 }
 
@@ -233,10 +234,6 @@ input[type="text"] {
   cursor: pointer;
   height: 18px;
   width: 18px;
-  background-size: 100%;
-  position: absolute;
-  top: 3px;
-  left: 25%;
 }
 
 .options-content {
@@ -261,4 +258,12 @@ input[type="text"] {
 
 .intro {
   font-size: 16px;
+}
+
+.content-blocker-title {
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }

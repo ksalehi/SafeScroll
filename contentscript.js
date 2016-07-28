@@ -3,16 +3,13 @@ let block = ["Trump"];
 
 chrome.storage.sync.get(
   {blockContent: [], disabled: false}, function(items) {
-    let toBlock = []
-    console.log(items);
+    let toBlock = [];
     items.blockContent.forEach((item) => {
       if (item.split(",")[2] === "true") {
         toBlock.push(item.split(",")[0]);
       }
-    })
+    });
     block = toBlock;
-    console.log(block);
-    console.log(items.disabled);
     if (!items.disabled) {
       walkAndObserve(document);
     }
@@ -55,9 +52,9 @@ function findParentContainer(elementNode) {
   // debugger
   const texts = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span", "a", "body"];
   let node = elementNode.parentNode;
-  let searchingForTarget = true
-  let addWarning = true
-  let target
+  let searchingForTarget = true;
+  let addWarning = true;
+  let target;
   while (node) {
     if (node.localName === "body") {
       break;
@@ -70,12 +67,12 @@ function findParentContainer(elementNode) {
     }
     if ($(node).hasClass("pos-rel")) {
       addWarning = false;
-      break
+      break;
     }
     node = node.parentNode;
   }
   if (addWarning) {
-    generateWarning(target)
+    generateWarning(target);
   }
 }
 
@@ -148,5 +145,3 @@ function walkAndObserve(doc) {
         titleObserver.observe(docTitle, observerConfig);
     }
 }
-
-// walkAndObserve(document);
