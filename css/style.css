@@ -1,17 +1,19 @@
+body {
+  font-family: Helvetica, sans-serif;
+}
+
 input {
   padding: 4px;
 }
 
 .extension-warning {
   z-index: 10;
-  /*border-radius: 0 5px 5px 5px;*/
   background: lightgray;
   text-align: center;
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
-  /*padding: 2px;*/
 
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f5fc+0,dedee2+100 */
   background: rgb(242,245,252); /* Old browsers */
@@ -19,7 +21,6 @@ input {
   background: -webkit-linear-gradient(top,  rgba(242,245,252,1) 0%,rgba(222,222,226,1) 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom,  rgba(242,245,252,1) 0%,rgba(222,222,226,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f5fc', endColorstr='#dedee2',GradientType=0 ); /* IE6-9 */
-
 }
 
 .pos-rel {
@@ -46,9 +47,6 @@ input {
 .unlocked {
   background-position: left;
   opacity: .5;
-  /*background-color: rgba(255,255,255,.5);*/
-  /*background-size: 15px;*/
-  /*border-radius: 50%;*/
 }
 
 .locked:hover {
@@ -82,7 +80,7 @@ input {
 }
 
 .options-image {
-  background-image: url('./images/lock-logo.png');
+  background-image: url('../lock-logo.png');
   background-repeat: no-repeat;
   background-size: 100%;
   display: block;
@@ -112,9 +110,7 @@ input {
 }
 
 .content-item {
-  /*display: none;*/
   font-size: 16px;
-
 }
 
 .content-item-label, .content-label {

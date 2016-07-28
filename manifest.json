@@ -3,11 +3,11 @@
 
   "name": "SafeScroll",
   "description": "Covers unwanted web content with a removable screen",
-  "version": "1.2",
+  "version": "1.5",
   "options_page": "options.html",
 
   "browser_action": {
-   "default_icon": "./css/images/lock-logo.png",
+   "default_icon": "lock-logo.png",
    "default_popup": "popup.html"
   },
   "permissions": [
